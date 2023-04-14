@@ -50,6 +50,7 @@ const createSchemaItemChildren = (
     ])
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const structure = (S: StructureBuilder, context: ConfigContext) => {
   return S.list()
     .id('root')
