@@ -8,8 +8,8 @@ import * as React from 'react'
 import Layout from '../components/Layout'
 import Loading from '../components/Loading'
 import Page from '../components/Page'
-import {projectId, revalidateSecret} from '../sanity/env'
-import {homeQuery} from '../sanity/queries'
+import {revalidateSecret} from '../sanity/env'
+import {pageQuery, pageSlugsQuery} from '../sanity/queries'
 import {getClient} from '../sanity/sanity.server'
 import {PageProps, PageQueryParams} from '../types'
 
@@ -22,7 +22,7 @@ interface Props {
   queryParams: PageQueryParams
 }
 
-export default function Home(props: Props) {
+export default function Slug(props: Props) {
   const {data, preview, query, queryParams} = props
   const router = useRouter()
 
@@ -54,30 +54,28 @@ export default function Home(props: Props) {
   )
 }
 
-export async function getStaticProps({preview = false}) {
-  if (projectId) {
-    const queryParams: PageQueryParams = {
-      slug: ``,
-    }
-
-    const homeQueryParams = {
-      ...queryParams,
-    }
-    const page = await getClient(preview).fetch(homeQuery, homeQueryParams)
-
-    return {
-      props: {
-        preview,
-        data: page,
-        query: preview ? homeQuery : null,
-        queryParams: preview ? homeQueryParams : null,
-      },
-      revalidate: revalidateSecret ? undefined : 60,
-    }
+export async function getStaticProps({params, preview = false}) {
+  const queryParams: PageQueryParams = {
+    slug: params.slug,
   }
 
+  const page = await getClient(preview).fetch(pageQuery, queryParams)
+
   return {
-    props: {},
-    revalidate: undefined,
+    props: {
+      preview,
+      data: page,
+      query: preview ? pageQuery : null,
+      queryParams: preview ? queryParams : null,
+    },
+    revalidate: revalidateSecret ? undefined : 60,
+  }
+}
+
+export async function getStaticPaths() {
+  const paths = await getClient(false).fetch(pageSlugsQuery)
+  return {
+    paths: paths.map((slug) => ({params: {slug}})),
+    fallback: false,
   }
 }

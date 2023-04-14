@@ -2,12 +2,23 @@ import {visionTool} from '@sanity/vision'
 import {defineConfig} from 'sanity'
 import {deskTool} from 'sanity/desk'
 
-const BASE_PATH = '/studio'
+import {apiVersion, dataset, projectId, title} from './sanity/env'
+import {structure} from './sanity/structure'
+import {defaultDocumentNode} from './sanity/structure/defaultDocumentNode'
+import {schema} from './schemas'
 
 export default defineConfig({
-  basePath: `${BASE_PATH}`,
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-  title: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE,
-  plugins: [deskTool(), visionTool({defaultApiVersion: '2023-04-11'})],
+  basePath: '/studio',
+  dataset,
+  projectId,
+  schema,
+  title,
+
+  plugins: [
+    deskTool({
+      structure: (S, context) => structure(S, context),
+      defaultDocumentNode,
+    }),
+    visionTool({defaultApiVersion: apiVersion}),
+  ],
 })

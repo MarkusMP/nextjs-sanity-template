@@ -1,7 +1,9 @@
+import {apiVersion, dataset, projectId} from './env'
+
 export const sanityConfig = {
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+  apiVersion,
+  dataset,
+  projectId,
   useCdn:
     typeof document !== 'undefined' && process.env.NODE_ENV === 'production',
-  apiVersion: '2023-04-11',
 }
