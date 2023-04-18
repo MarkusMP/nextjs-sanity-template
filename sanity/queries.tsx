@@ -3,6 +3,12 @@ import groq from 'groq'
 const pageFields = groq`
   title,
   "slug": slug.current,
+  seo {
+    noIndex,
+    titleSEO,
+    descriptionSEO,
+    image
+  }
 `
 
 export const previewBySlugQuery = groq`

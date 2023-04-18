@@ -1,6 +1,7 @@
 import * as React from 'react'
 
-import {PageQueryParams} from '@/types'
+import {urlForImage} from '@/sanity/sanity'
+import {Image, PageQueryParams} from '@/types'
 
 import Alert from './Alert'
 import {DebugProvider} from './Debug/DebugProvider'
@@ -9,14 +10,33 @@ import Meta from './Meta'
 export type LayoutProps = {
   preview: boolean
   queryParams?: PageQueryParams
+  slug?: string
+  seo?: {
+    noIndex?: boolean
+    titleSEO?: string
+    descriptionSEO?: string
+    image?: Image
+  }
 }
 
 export default function Layout(props) {
-  const {preview, queryParams, children} = props
+  const {preview, queryParams, children, seo, slug} = props
+
+  const ogImage = seo?.image && urlForImage(seo.image).url()
 
   return (
     <DebugProvider>
-      <Meta />
+      <Meta
+        noIndex={seo.noIndex}
+        canonical={
+          slug
+            ? `${process.env.NEXT_PUTBLIC_SITE_URL}/${slug === '/' ? '' : slug}`
+            : null
+        }
+        title={seo.titleSEO}
+        description={seo.descriptionSEO}
+        ogImage={ogImage ? ogImage : null}
+      />
       <div className="min-h-screen bg-black">
         {/* <Header /> */}
         {preview ? <Alert preview={preview} queryParams={queryParams} /> : null}

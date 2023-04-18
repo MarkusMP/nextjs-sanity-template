@@ -1,5 +1,4 @@
 import ErrorPage from 'next/error'
-import Head from 'next/head'
 import {useRouter} from 'next/router'
 import * as React from 'react'
 
@@ -13,10 +12,11 @@ interface Props {
   data: PageProps
   query: string | null
   queryParams: PageQueryParams
+  slug?: string
 }
 
 export default function PreviewPage(props: Props) {
-  const {query, queryParams} = props
+  const {query, queryParams, slug} = props
   const router = useRouter()
 
   const data = usePreview(null, query, queryParams) || props.data
@@ -26,14 +26,11 @@ export default function PreviewPage(props: Props) {
   }
 
   return (
-    <Layout preview queryParams={queryParams}>
+    <Layout preview queryParams={queryParams} seo={data.seo} slug={slug}>
       {router.isFallback ? (
         <Loading />
       ) : (
         <>
-          <Head>
-            <title>{`${data.title}`}</title>
-          </Head>
           <Page {...data} />
         </>
       )}

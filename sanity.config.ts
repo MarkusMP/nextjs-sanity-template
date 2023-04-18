@@ -1,6 +1,8 @@
 import {visionTool} from '@sanity/vision'
 import {defineConfig} from 'sanity'
 import {deskTool} from 'sanity/desk'
+import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
+import {media} from 'sanity-plugin-media'
 
 import {apiVersion, dataset, projectId, title} from './sanity/env'
 import {structure} from './sanity/structure'
@@ -20,5 +22,7 @@ export default defineConfig({
       defaultDocumentNode,
     }),
     visionTool({defaultApiVersion: apiVersion}),
+    unsplashImageAsset(),
+    media(),
   ],
 })

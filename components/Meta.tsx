@@ -1,42 +1,66 @@
 import Head from 'next/head'
 import * as React from 'react'
 
-export default function Meta() {
+export default function Meta({
+  description,
+  ogImage,
+  title,
+  noIndex = false,
+  canonical,
+}: {
+  description?: string
+  ogImage?: string
+  title?: string
+  noIndex: boolean
+  canonical?: string | null
+}) {
   return (
     <Head>
+      <title>{title && title}</title>
+      <meta name="viewport" content="width=device-width,initial-scale=1.0" />
       <link
         rel="apple-touch-icon"
         sizes="180x180"
-        href="/favicon/apple-touch-icon.png"
+        href="/apple-touch-icon.png"
       />
       <link
         rel="icon"
         type="image/png"
         sizes="32x32"
-        href="/favicon/favicon-32x32.png"
+        href="/favicon-32x32.png"
       />
       <link
         rel="icon"
         type="image/png"
         sizes="16x16"
-        href="/favicon/favicon-16x16.png"
+        href="/favicon-16x16.png"
       />
-      <link rel="manifest" href="/favicon/site.webmanifest" />
-      <link
-        rel="mask-icon"
-        href="/favicon/safari-pinned-tab.svg"
-        color="#000000"
-      />
-      <link rel="shortcut icon" href="/favicon/favicon.ico" />
-      <meta name="msapplication-TileColor" content="#000000" />
-      <meta name="msapplication-config" content="/favicon/browserconfig.xml" />
-      <meta name="theme-color" content="#000" />
-      <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
+      <link rel="manifest" href="/site.webmanifest" />
+      <link rel="shortcut icon" href="/favicon.ico" />
+      <meta name="msapplication-TileColor" content="#F9FAFB" />
+      <meta name="msapplication-config" content="/browserconfig.xml" />
+      <meta name="theme-color" content="#F9FAFB" />
       <meta
+        key="description"
         name="description"
-        content={`A statically generated marketing site example using Next.js.`}
+        content={description && description}
       />
-      {/* <meta property="og:image" content={HOME_OG_IMAGE_URL} key="ogImage" /> */}
+
+      {canonical && <link rel="canonical" href={canonical} key="canonical" />}
+
+      {ogImage && <meta property="og:title" content={title && title} />}
+      {ogImage && <meta property="og:image" content={`${ogImage}`} />}
+      {ogImage && (
+        <meta property="og:description" content={description && description} />
+      )}
+      {ogImage && canonical && <meta property="og:url" content={canonical} />}
+      {ogImage && <meta property="og:image:width" content="1200" />}
+      {ogImage && <meta property="og:image:height" content="630" />}
+
+      {noIndex && <meta key="robots" name="robots" content="noindex,follow" />}
+      {noIndex && (
+        <meta key="googlebot" name="googlebot" content="noindex,follow" />
+      )}
     </Head>
   )
 }

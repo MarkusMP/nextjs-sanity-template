@@ -1,4 +1,4 @@
-// import {getExtension, getImageDimensions} from '@sanity/asset-utils'
+import {getExtension, getImageDimensions} from '@sanity/asset-utils'
 import {defineField, defineType} from 'sanity'
 
 export default defineType({
@@ -17,22 +17,17 @@ export default defineType({
       initialValue: false,
     }),
     defineField({
-      name: `title`,
+      name: `titleSEO`,
       type: `string`,
-      description: `Override the page title`,
+      title: 'Title for SEO & social sharing',
+      description:
+        'Make it as enticing as possible to convert users in social feeds and Google searches, Ideally between 15 and 70 characters.',
     }),
-    // defineField({
-    //   name: `keywords`,
-    //   type: `string`,
-    //   description: `Separate, with, commas`,
-    // }),
-    // defineField({
-    //   name: `synonyms`,
-    //   type: `string`,
-    //   description: `Similar words to inform the SEO review`,
-    // }),
     defineField({
-      name: `description`,
+      name: `descriptionSEO`,
+      title: 'Short paragraph for SEO & social sharing (meta description)',
+      description:
+        "⚡ Optional but highly encouraged as it'll help you convert more visitors from Google & social, Ideally between 70 and 160 characters.",
       type: `text`,
       rows: 3,
       validation: (Rule) => [
@@ -40,30 +35,30 @@ export default defineType({
         Rule.min(120).warning('Description should be at least 120 characters'),
       ],
     }),
-    // defineField({
-    //   name: `image`,
-    //   type: `image`,
-    //   options: {hotspot: true},
-    //   validation: (rule) =>
-    //     rule.custom((value) => {
-    //       if (!value?.asset?._ref) {
-    //         return true
-    //       }
+    defineField({
+      name: `image`,
+      type: `image`,
+      options: {hotspot: true},
+      validation: (rule) =>
+        rule.custom((value) => {
+          if (!value?.asset?._ref) {
+            return true
+          }
 
-    //       const filetype = getExtension(value.asset._ref)
+          const filetype = getExtension(value.asset._ref)
 
-    //       if (filetype !== 'jpg' && filetype !== 'png') {
-    //         return 'Image must be a JPG or PNG'
-    //       }
+          if (filetype !== 'jpg' && filetype !== 'png') {
+            return 'Image must be a JPG or PNG'
+          }
 
-    //       const {width, height} = getImageDimensions(value.asset._ref)
+          const {width, height} = getImageDimensions(value.asset._ref)
 
-    //       if (width < 1200 || height < 630) {
-    //         return 'Image must be at least 1200x630 pixels'
-    //       }
+          if (width < 1200 || height < 630) {
+            return 'Image must be at least 1200x630 pixels'
+          }
 
-    //       return true
-    //     }),
-    // }),
+          return true
+        }),
+    }),
   ],
 })

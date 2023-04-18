@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import {notFound} from 'next/navigation'
 import {useRouter} from 'next/router'
 import {PreviewSuspense} from 'next-sanity/preview'
@@ -20,16 +19,22 @@ interface Props {
   preview: boolean
   query: string | null
   queryParams: PageQueryParams
+  slug: string
 }
 
 export default function Home(props: Props) {
-  const {data, preview, query, queryParams} = props
+  const {data, preview, query, queryParams, slug} = props
   const router = useRouter()
 
   if (preview) {
     return (
       <PreviewSuspense fallback={<Loading />}>
-        <PreviewPage data={data} query={query} queryParams={queryParams} />
+        <PreviewPage
+          data={data}
+          query={query}
+          queryParams={queryParams}
+          slug={slug}
+        />
       </PreviewSuspense>
     )
   }
@@ -39,14 +44,16 @@ export default function Home(props: Props) {
   }
 
   return (
-    <Layout preview={preview} queryParams={queryParams}>
+    <Layout
+      preview={preview}
+      queryParams={queryParams}
+      seo={data.seo}
+      slug={slug}
+    >
       {router.isFallback ? (
         <Loading />
       ) : (
         <>
-          <Head>
-            <title>{`${data.title}`}</title>
-          </Head>
           <Page {...data} />
         </>
       )}
@@ -57,7 +64,7 @@ export default function Home(props: Props) {
 export async function getStaticProps({preview = false}) {
   if (projectId) {
     const queryParams: PageQueryParams = {
-      slug: ``,
+      slug: `/`,
     }
 
     const homeQueryParams = {
@@ -71,6 +78,7 @@ export async function getStaticProps({preview = false}) {
         data: page,
         query: preview ? homeQuery : null,
         queryParams: preview ? homeQueryParams : null,
+        slug: queryParams.slug,
       },
       revalidate: revalidateSecret ? undefined : 60,
     }

@@ -14,6 +14,9 @@ export default defineType({
   fields: [
     defineField({
       name: 'title',
+      title: 'Title for menu & links',
+      description:
+        "💡 This won't show up for users, just make sure you add a descriptive name which will make it easy to find this page later when adding links or searching & browsing the CMS.",
       type: 'string',
       validation: (Rule) => Rule.required(),
       group: 'content',

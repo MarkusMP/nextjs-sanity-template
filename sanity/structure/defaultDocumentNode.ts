@@ -1,12 +1,9 @@
 import {DefaultDocumentNodeResolver} from 'sanity/desk'
-// import DocumentsPane from 'sanity-plugin-documents-pane'
 import Iframe from 'sanity-plugin-iframe-pane'
 
-// import OGPreview from '../components/OGPreview'
-// import SocialSharePreview from '../components/SocialSharePreview'
-// import {getOgUrl} from './getOgUrl'
+// install this dependency when it's fixed
+// import {SEOPane} from 'sanity-plugin-seo-pane'
 import {getPreviewUrl} from './getPreviewUrl'
-// import {getSocialShareUrl} from './getSocialShareUrl'
 
 export const defaultDocumentNode: DefaultDocumentNodeResolver = (
   S,
@@ -24,11 +21,19 @@ export const defaultDocumentNode: DefaultDocumentNodeResolver = (
           })
           .title('Preview'),
         // S.view
-        //   .component(OGPreview)
+        //   .component(SEOPane)
         //   .options({
-        //     url: (doc) => getOgUrl(doc),
+        //     // Retrieve the keywords and synonyms at the given dot-notated strings
+        //     keywords: `seo.keywords`,
+        //     synonyms: `seo.synonyms`,
+        //     url: (doc) => getPreviewUrl(doc),
+
+        //     // Alternatively, specify functions (may be async) to extract values
+        //     // keywords: doc => doc.seo?.keywords,
+        //     // synonyms: async(doc) => client.fetch('some query to get synonyms', {id: doc._id}),
+        //     // url: async(doc) => client.fetch('some query to construct a url with refs', {id: doc._id})
         //   })
-        //   .title('Open Graph'),
+        //   .title('SEO'),
       ])
     case `home`:
       return S.document().views([
@@ -41,11 +46,19 @@ export const defaultDocumentNode: DefaultDocumentNodeResolver = (
           })
           .title('Preview'),
         // S.view
-        //   .component(OGPreview)
+        //   .component(SEOPane)
         //   .options({
-        //     url: (doc) => getOgUrl(doc),
+        //     // Retrieve the keywords and synonyms at the given dot-notated strings
+        //     keywords: `seo.keywords`,
+        //     synonyms: `seo.synonyms`,
+        //     url: (doc) => getPreviewUrl(doc),
+
+        //     // Alternatively, specify functions (may be async) to extract values
+        //     // keywords: doc => doc.seo?.keywords,
+        //     // synonyms: async(doc) => client.fetch('some query to get synonyms', {id: doc._id}),
+        //     // url: async(doc) => client.fetch('some query to construct a url with refs', {id: doc._id})
         //   })
-        //   .title('Open Graph'),
+        //   .title('SEO'),
       ])
     case `notFound`:
       return S.document().views([
@@ -58,11 +71,19 @@ export const defaultDocumentNode: DefaultDocumentNodeResolver = (
           })
           .title('Preview'),
         // S.view
-        //   .component(OGPreview)
+        //   .component(SEOPane)
         //   .options({
-        //     url: (doc) => getOgUrl(doc),
+        //     // Retrieve the keywords and synonyms at the given dot-notated strings
+        //     keywords: `seo.keywords`,
+        //     synonyms: `seo.synonyms`,
+        //     url: (doc) => getPreviewUrl(doc),
+
+        //     // Alternatively, specify functions (may be async) to extract values
+        //     // keywords: doc => doc.seo?.keywords,
+        //     // synonyms: async(doc) => client.fetch('some query to get synonyms', {id: doc._id}),
+        //     // url: async(doc) => client.fetch('some query to construct a url with refs', {id: doc._id})
         //   })
-        //   .title('Open Graph'),
+        //   .title('SEO'),
       ])
 
     default:

@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import {useRouter} from 'next/router'
 import {PreviewSuspense} from 'next-sanity/preview'
 import {lazy} from 'react'
@@ -19,10 +18,11 @@ interface Props {
   preview: boolean
   query: string | null
   queryParams: PageQueryParams
+  slug: string
 }
 
 export default function Custom404(props: Props) {
-  const {data, preview, query, queryParams} = props
+  const {data, preview, query, queryParams, slug} = props
   const router = useRouter()
 
   if (preview) {
@@ -34,14 +34,16 @@ export default function Custom404(props: Props) {
   }
 
   return (
-    <Layout preview={preview} queryParams={queryParams}>
+    <Layout
+      preview={preview}
+      queryParams={queryParams}
+      seo={data.seo}
+      slug={slug}
+    >
       {router.isFallback ? (
         <Loading />
       ) : (
         <>
-          <Head>
-            <title>{`${data.title}`}</title>
-          </Head>
           <Page {...data} />
         </>
       )}
@@ -49,7 +51,9 @@ export default function Custom404(props: Props) {
   )
 }
 
-export async function getStaticProps({preview = false}) {
+export async function getStaticProps({params, preview = false}) {
+  // eslint-disable-next-line no-console
+  console.log({params})
   const queryParams: PageQueryParams = {
     slug: `404`,
   }
