@@ -22,8 +22,8 @@ export default async function preview(
     return redirectToPreview(res, '/')
   }
 
-  if(req.query.slug === '404') {
-      return redirectToPreview(res, `/404`)
+  if (req.query.slug === '404') {
+    return redirectToPreview(res, `/404`)
   }
 
   const pageSlug = await getClient(true).fetch(previewBySlugQuery, {
