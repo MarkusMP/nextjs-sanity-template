@@ -7,7 +7,9 @@ type PageBuilderProps = {
   rows: (KeyedObject & TypedObject)[]
 }
 
-const ROWS = {}
+const ROWS = {
+  hero: React.lazy(() => import('./Hero')),
+}
 
 export default function PageBuilder(props: PageBuilderProps) {
   const {rows} = props

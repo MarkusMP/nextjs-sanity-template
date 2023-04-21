@@ -52,8 +52,6 @@ export default function Custom404(props: Props) {
 }
 
 export async function getStaticProps({params, preview = false}) {
-  // eslint-disable-next-line no-console
-  console.log({params})
   const queryParams: PageQueryParams = {
     slug: `404`,
   }

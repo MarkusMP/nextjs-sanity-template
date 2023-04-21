@@ -8,6 +8,9 @@ const pageFields = groq`
     titleSEO,
     descriptionSEO,
     image
+  },
+  content[]{
+    ...,
   }
 `
 

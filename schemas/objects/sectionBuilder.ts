@@ -5,5 +5,5 @@ export default defineType({
   title: 'Section Builder',
   type: 'array',
   validation: (rule) => rule.unique(),
-  of: [],
+  of: [{type: 'hero'}],
 })
