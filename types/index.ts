@@ -22,3 +22,24 @@ export interface PageProps {
 export type PageQueryParams = {
   slug: string
 }
+
+export interface HeaderProps {
+  image: Image
+  menuItems: MenuItem[]
+}
+
+interface MenuItem {
+  _key: string
+  _type: string
+  children: null | Link
+  link: Link
+}
+
+export type Link = {
+  text?: string
+  url?: string
+  reference?: {
+    slug?: string
+    title?: string
+  }
+}

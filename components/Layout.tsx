@@ -5,6 +5,7 @@ import {Image, PageQueryParams} from '@/types'
 
 import Alert from './Alert'
 import {DebugProvider} from './Debug/DebugProvider'
+import Header from './Header'
 import Meta from './Meta'
 
 export type LayoutProps = {
@@ -17,10 +18,11 @@ export type LayoutProps = {
     descriptionSEO?: string
     image?: Image
   }
+  header?: any
 }
 
 export default function Layout(props) {
-  const {preview, queryParams, children, seo, slug} = props
+  const {preview, queryParams, children, seo, slug, header} = props
 
   const ogImage = seo?.image && urlForImage(seo.image).url()
 
@@ -38,7 +40,7 @@ export default function Layout(props) {
         ogImage={ogImage ? ogImage : null}
       />
       <div className="min-h-screen bg-black">
-        {/* <Header /> */}
+        <Header data={header} />
         {preview ? <Alert preview={preview} queryParams={queryParams} /> : null}
         <main>{children}</main>
         {/* <Footer /> */}

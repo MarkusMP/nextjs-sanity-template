@@ -1,6 +1,6 @@
 import '@/styles/index.css'
 
-import {Inter} from '@next/font/google'
+import {Inter} from 'next/font/google'
 import * as React from 'react'
 
 const inter = Inter({

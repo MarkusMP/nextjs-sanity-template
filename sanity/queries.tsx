@@ -14,6 +14,25 @@ const pageFields = groq`
   }
 `
 
+export const headerQuery = groq`
+*[_type == "header"]|order(_updatedAt desc)[0]{
+    image,
+    menuItems[(defined(link.text) && defined(link.url)) || defined(link.reference)] {
+       ...,
+      _key,
+      "link": link{
+        url,
+        text,
+        reference->{
+          title,
+          "slug": slug.current
+        }
+      },
+      children
+  }
+}
+`
+
 export const previewBySlugQuery = groq`
 *[_type in ["page", "article"] && slug.current == $slug][0].slug.current
 `

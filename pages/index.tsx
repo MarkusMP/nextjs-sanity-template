@@ -8,7 +8,7 @@ import Layout from '../components/Layout'
 import Loading from '../components/Loading'
 import Page from '../components/Page'
 import {projectId, revalidateSecret} from '../sanity/env'
-import {homeQuery} from '../sanity/queries'
+import {headerQuery, homeQuery} from '../sanity/queries'
 import {getClient} from '../sanity/sanity.server'
 import {PageProps, PageQueryParams} from '../types'
 
@@ -20,10 +20,11 @@ interface Props {
   query: string | null
   queryParams: PageQueryParams
   slug: string
+  header: any
 }
 
 export default function Home(props: Props) {
-  const {data, preview, query, queryParams, slug} = props
+  const {data, preview, query, queryParams, slug, header} = props
   const router = useRouter()
 
   if (preview) {
@@ -34,6 +35,7 @@ export default function Home(props: Props) {
           query={query}
           queryParams={queryParams}
           slug={slug}
+          header={header}
         />
       </PreviewSuspense>
     )
@@ -49,6 +51,7 @@ export default function Home(props: Props) {
       queryParams={queryParams}
       seo={data.seo}
       slug={slug}
+      header={header}
     >
       {router.isFallback ? (
         <Loading />
@@ -72,6 +75,10 @@ export async function getStaticProps({preview = false}) {
     }
     const page = await getClient(preview).fetch(homeQuery, homeQueryParams)
 
+    const {header}: any = await getClient(preview).fetch(`{
+      "header": ${headerQuery}
+    }`)
+
     return {
       props: {
         preview,
@@ -79,6 +86,7 @@ export async function getStaticProps({preview = false}) {
         query: preview ? homeQuery : null,
         queryParams: preview ? homeQueryParams : null,
         slug: queryParams.slug,
+        header,
       },
       revalidate: revalidateSecret ? undefined : 60,
     }

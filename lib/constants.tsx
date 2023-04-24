@@ -1,4 +1,4 @@
-import {File, HelpCircle, Home} from 'lucide-react'
+import {File, HelpCircle, Home, MenuIcon} from 'lucide-react'
 
 export type SchemaItem = {
   kind: 'list'
@@ -23,4 +23,5 @@ export const SCHEMA_ITEMS: (SchemaItem | SchemaSingleton | SchemaDivider)[] = [
   {kind: 'list', schemaType: `page`, title: 'Pages', icon: File},
   {kind: 'singleton', schemaType: `notFound`, title: '404', icon: HelpCircle},
   {kind: 'divider'},
+  {kind: 'singleton', schemaType: `header`, title: 'Header', icon: MenuIcon},
 ]
