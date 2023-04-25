@@ -15,7 +15,7 @@ type ButtonProps = LinkProps & {
 }
 
 const buttonClasses = {
-  base: `px-3 py-2 leading-none rounded transition-colors duration-200 ease-in-out`,
+  base: `px-3 py-2 rounded transition-colors duration-200 ease-in-out`,
   default: `text-white`,
   disabled: `pointer-events-none opacity-40`,
 }

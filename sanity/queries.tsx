@@ -32,6 +32,29 @@ export const headerQuery = groq`
   }
 }
 `
+export const footerQuery = groq`
+*[_type == "footer"]|order(_updatedAt desc)[0]{
+  image,
+  
+  linksItems[] {
+    title,
+      _key,
+    menuItems[(defined(link.text) && defined(link.url)) || defined(link.reference)] {
+       ...,
+      _key,
+      "link": link{
+        url,
+        text,
+        reference->{
+          title,
+          "slug": slug.current
+        }
+      },
+      children
+    }
+  }
+}
+`
 
 export const previewBySlugQuery = groq`
 *[_type in ["page", "article"] && slug.current == $slug][0].slug.current

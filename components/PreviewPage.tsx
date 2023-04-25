@@ -14,10 +14,11 @@ interface Props {
   queryParams: PageQueryParams
   slug?: string
   header: any
+  footer: any
 }
 
 export default function PreviewPage(props: Props) {
-  const {query, queryParams, slug, header} = props
+  const {query, queryParams, slug, header, footer} = props
   const router = useRouter()
 
   const data = usePreview(null, query, queryParams) || props.data
@@ -33,6 +34,7 @@ export default function PreviewPage(props: Props) {
       seo={data.seo}
       slug={slug}
       header={header}
+      footer={footer}
     >
       {router.isFallback ? (
         <Loading />

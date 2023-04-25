@@ -5,6 +5,7 @@ import {Image, PageQueryParams} from '@/types'
 
 import Alert from './Alert'
 import {DebugProvider} from './Debug/DebugProvider'
+import Footer from './Footer'
 import Header from './Header'
 import Meta from './Meta'
 
@@ -19,10 +20,11 @@ export type LayoutProps = {
     image?: Image
   }
   header?: any
+  footer?: any
 }
 
 export default function Layout(props) {
-  const {preview, queryParams, children, seo, slug, header} = props
+  const {preview, queryParams, children, seo, slug, header, footer} = props
 
   const ogImage = seo?.image && urlForImage(seo.image).url()
 
@@ -43,7 +45,7 @@ export default function Layout(props) {
         <Header data={header} />
         {preview ? <Alert preview={preview} queryParams={queryParams} /> : null}
         <main>{children}</main>
-        {/* <Footer /> */}
+        <Footer data={footer} />
       </div>
     </DebugProvider>
   )

@@ -43,3 +43,14 @@ export type Link = {
     title?: string
   }
 }
+
+export interface FooterProps {
+  image: Image
+  linksItems: LinkList[]
+}
+
+type LinkList = {
+  title: string
+  menuItems: MenuItem[]
+  _key: string
+}

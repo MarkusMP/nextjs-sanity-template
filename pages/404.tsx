@@ -7,7 +7,7 @@ import Layout from '../components/Layout'
 import Loading from '../components/Loading'
 import Page from '../components/Page'
 import {revalidateSecret} from '../sanity/env'
-import {headerQuery, notFoundQuery} from '../sanity/queries'
+import {footerQuery, headerQuery, notFoundQuery} from '../sanity/queries'
 import {getClient} from '../sanity/sanity.server'
 import {PageProps, PageQueryParams} from '../types'
 
@@ -20,10 +20,11 @@ interface Props {
   queryParams: PageQueryParams
   slug: string
   header: any
+  footer: any
 }
 
 export default function Custom404(props: Props) {
-  const {data, preview, query, queryParams, slug, header} = props
+  const {data, preview, query, queryParams, slug, header, footer} = props
   const router = useRouter()
 
   if (preview) {
@@ -34,6 +35,7 @@ export default function Custom404(props: Props) {
           query={query}
           queryParams={queryParams}
           header={header}
+          footer={footer}
         />
       </PreviewSuspense>
     )
@@ -46,6 +48,7 @@ export default function Custom404(props: Props) {
       seo={data.seo}
       slug={slug}
       header={header}
+      footer={footer}
     >
       {router.isFallback ? (
         <Loading />
@@ -71,8 +74,9 @@ export async function getStaticProps({params, preview = false}) {
     notFoundQueryParams
   )
 
-  const {header}: any = await getClient(preview).fetch(`{
-      "header": ${headerQuery}
+  const {header, footer}: any = await getClient(preview).fetch(`{
+      "header": ${headerQuery},
+      "footer": ${footerQuery}
     }`)
 
   return {
@@ -82,6 +86,7 @@ export async function getStaticProps({params, preview = false}) {
       header,
       query: preview ? notFoundQuery : null,
       queryParams: preview ? notFoundQueryParams : null,
+      footer,
     },
     revalidate: revalidateSecret ? undefined : 60,
   }
