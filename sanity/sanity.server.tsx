@@ -1,4 +1,4 @@
-import {createClient} from 'next-sanity'
+import {createClient} from '@sanity/preview-kit/client'
 
 import {sanityConfig} from './config'
 
@@ -17,6 +17,7 @@ export const getClient = (preview) =>
         projectId: sanityConfig.projectId,
         dataset: sanityConfig.dataset,
         apiVersion: sanityConfig.apiVersion,
+        useCdn: false,
       })
 
 export function overlayDrafts(docs) {
